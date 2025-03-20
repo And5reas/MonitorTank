@@ -1,12 +1,17 @@
 import { View, Text, StyleSheet, Button } from 'react-native';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ButtonsPower from '../../components/ButtonsPower'
 import ButtonsRefresh from '../../components/ButtonsRefresh';
 import TankAnimation from '../../components/TankAnimation';
+import { connectMqtt,  publishMessage, disconnectMqtt} from '../../services/mqttService'
 
 export default function Tab() {
 
   const [progress, setProgress] = useState(0);
+
+  useEffect (() => {
+      connectMqtt();
+  }, []);
 
   const aumentarProgresso = () => {
     setProgress((prev) => (prev >= 100 ? 0 : prev + 5)); //quantidade a cada click
