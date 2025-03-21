@@ -7,23 +7,18 @@ import { connectMqtt,  publishMessage, disconnectMqtt} from '../../services/mqtt
 
 export default function Tab() {
 
-  const [progress, setProgress] = useState(0);
+  const [tankLevel, setTankLevel] = useState(0);
 
   useEffect (() => {
-      connectMqtt();
+      connectMqtt(setTankLevel);
   }, []);
-
-  const aumentarProgresso = () => {
-    setProgress((prev) => (prev >= 100 ? 0 : prev + 5)); //quantidade a cada click
-  };
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Monitoramento de nível</Text>
 
       <View style={styles.tank}>
-        <TankAnimation progress={progress} />
-        <Button title="Aumentar Progresso" onPress={aumentarProgresso} />
+        <TankAnimation progress={tankLevel} />
       </View>
 
       <View style={styles.buttons}>
