@@ -13,7 +13,7 @@ interface ButtonsPowerProps {
 const ButtonsPower: React.FC<ButtonsPowerProps> = ({ title, screen }) => {
 
     return (
-        <TouchableOpacity style={styles.button} onPress={() => screen}>
+        <TouchableOpacity style={styles.button} onPress={() => screen()}>
             <View>
                 <Text style={styles.title} numberOfLines={2} adjustsFontSizeToFit>
                     {title}
