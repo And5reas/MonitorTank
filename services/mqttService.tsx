@@ -1,4 +1,5 @@
 import mqtt, { MqttClient } from "mqtt";
+import { Float } from "react-native/Libraries/Types/CodegenTypes";
 
 const MQTT_BROKER = "ws://test.mosquitto.org:8080"; // Use um broker WebSocket
 const MQTT_TOPIC = "projeto/tanque/216590/215446/214707";
@@ -6,7 +7,7 @@ const MQTT_TOPIC = "projeto/tanque/216590/215446/214707";
 let client: MqttClient | null = null;
 
 export const connectMqtt = (
-  onMessageReceived?: (message: string) => void
+  onMessageReceived?: (message: Float) => void
 ): void => {
   client = mqtt.connect(MQTT_BROKER);
 
@@ -24,7 +25,8 @@ export const connectMqtt = (
   client.on("message", (topic: string, message: Buffer) => {
     console.log(`Mensagem recebida: ${message.toString()}`);
     const data = JSON.parse(message.toString());
-    onMessageReceived?.(data["temperatura"]);
+    const temperatura = parseFloat(data["temperatura"]);
+    onMessageReceived?.(temperatura);
   });
 
   client.on("error", (err) => {
