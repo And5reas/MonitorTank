@@ -7,13 +7,13 @@ import { StackNavigationProp } from "@react-navigation/stack";
 // Definição dos tipos das props do componente
 interface ButtonsPowerProps {
     title: string;
-    screen: string;
+    screen: Function;
 }
 
 const ButtonsPower: React.FC<ButtonsPowerProps> = ({ title }) => {
 
     return (
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={styles.button} onPress={() => screen}>
             <View>
                 <Text style={styles.title} numberOfLines={2} adjustsFontSizeToFit>
                     {title}

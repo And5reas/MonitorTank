@@ -9,6 +9,8 @@ export default function Tab() {
 
   const [progress, setProgress] = useState(0);
 
+  
+
   useEffect (() => {
       connectMqtt();
   }, []);
@@ -29,11 +31,7 @@ export default function Tab() {
       <View style={styles.buttons}>
         <ButtonsPower
           title='Power'
-          screen=""
-        />
-        <ButtonsPower
-          title='Power'
-          screen=""
+          screen= {() => {}}  
         />
       </View>
       <View style={styles.refresh}>
