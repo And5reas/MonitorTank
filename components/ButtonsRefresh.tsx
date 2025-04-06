@@ -5,13 +5,13 @@ import { Ionicons } from '@expo/vector-icons';
 // Definição dos tipos das props do componente
 interface ButtonsRefreshProps {
     title: string;
-    screen: string;
+    screen: Function;
 }
 
-const ButtonsRefresh: React.FC<ButtonsRefreshProps> = ({ title }) => {
+const ButtonsRefresh: React.FC<ButtonsRefreshProps> = ({ title, screen }) => {
 
     return (
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={styles.button} onPress={() => screen()}>
             <View>
                 <Text style={styles.title} numberOfLines={2} adjustsFontSizeToFit>
                     {title}
