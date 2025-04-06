@@ -2,13 +2,18 @@ import mqtt, { MqttClient } from "mqtt";
 import { Float } from "react-native/Libraries/Types/CodegenTypes";
 
 const MQTT_BROKER = "ws://test.mosquitto.org:8080"; // Use um broker WebSocket
-const MQTT_TOPIC = "projeto/tanque/216590/215446/214707";
+const MQTT_TOPIC = "projeto/tanque/216590";
 
 let client: MqttClient | null = null;
 
 export const connectMqtt = (
   onMessageReceived?: (message: Float) => void
 ): void => {
+  if (client) {
+    console.log("MQTT já inicializado.");
+    return;
+  }
+
   client = mqtt.connect(MQTT_BROKER);
 
   client.on("connect", () => {
@@ -24,13 +29,22 @@ export const connectMqtt = (
 
   client.on("message", (topic: string, message: Buffer) => {
     console.log(`Mensagem recebida: ${message.toString()}`);
-    const data = JSON.parse(message.toString());
-    const temperatura = parseFloat(data["temperatura"]);
+    const data = message.toString();
+    
+    if (data == 'toggleBomba' || data == 'toggleSolenoide' || data == 'toggleAuto') {
+      return;
+    }
+
+    const temperatura = parseFloat(data);
     onMessageReceived?.(temperatura);
   });
 
   client.on("error", (err) => {
     console.error("Erro MQTT:", err);
+  });
+
+  client.on('close', () => {
+    console.log('❌ Conexão encerrada');
   });
 };
 
